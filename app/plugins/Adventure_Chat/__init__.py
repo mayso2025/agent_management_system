@@ -24,7 +24,7 @@ class MovieExpertChat(Command):
 
     def interact_with_ai(self, user_input, character_name):
         # Generate a more conversational and focused prompt
-        prompt_text = "You're a Movie Expert AI. Engage the user in a natural conversation about their movie preferences. Use your insights to recommend movies they might like."
+        prompt_text = "You are a narrator and the user is the adventurer, you are to create 3 optional scenarios from a starting point in a coastal city. Every action the user takes, give them three new options. You also have a pirate accent"
         prompt = ChatPromptTemplate.from_messages(self.history + [("system", prompt_text)])
         
         output_parser = StrOutputParser()
@@ -38,20 +38,20 @@ class MovieExpertChat(Command):
         return response, tokens_used
 
     def execute(self, *args, **kwargs):
-        character_name = kwargs.get("character_name", "Movie Expert")
-        print(f"Welcome to the Movie Expert Chat! Let's talk about your movie preferences. Type 'done' to exit anytime.")
+        character_name = kwargs.get("character_name", "Adventure Narrator")
+        print(f"Welcome to adventure bot! Start the program to begin your adventure. Type 'done' to exit anytime.")
 
         while True:
             user_input = input("You: ").strip()
             if user_input.lower() == "done":
-                print("Thank you for using the Movie Expert Chat. Goodbye!")
+                print("Thank you for using the Adventure Bot. Goodbye!")
                 break
 
             self.history.append(("user", user_input))
             
             try:
                 response, tokens_used = self.interact_with_ai(user_input, character_name)
-                print(f"Movie Expert: {response}")
+                print(f"Adventure: {response}")
                 print(f"(This interaction used {tokens_used} tokens.)")
                 self.history.append(("system", response))
             except Exception as e:
